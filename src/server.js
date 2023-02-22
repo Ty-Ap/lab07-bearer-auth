@@ -1,8 +1,10 @@
 'use strict';
 
 // 3rd Party Resources
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
 
 // Esoteric Resources
 const errorHandler = require('./error-handlers/500.js');
@@ -11,6 +13,7 @@ const authRoutes = require('./auth/router/index.js');
 
 // Prepare the express app
 const app = express();
+
 
 // App Level MW
 app.use(cors());
@@ -25,11 +28,13 @@ app.use(authRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
+
+
 module.exports = {
   server: app,
-  startup: (port) => {
-    app.listen(port, () => {
-      console.log(`Server Up on ${port}`);
+  startup: (PORT) => {
+    app.listen(PORT, () => {
+      console.log(`Server Up on ${PORT}`);
     });
   },
 };
