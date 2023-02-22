@@ -11,7 +11,7 @@ const mockRequest = supertest(server);
 let userData = {
   testUser: { username: 'user', password: 'password' },
 };
-let accessToken = null;
+let accessToken = 'something';
 
 beforeAll(async () => {
   await db.sync();

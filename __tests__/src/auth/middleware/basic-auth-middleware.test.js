@@ -15,6 +15,7 @@ beforeAll(async () => {
   await db.sync();
   await users.create(userInfo.admin);
 });
+
 afterAll(async () => {
   await db.drop();
 });
@@ -34,7 +35,7 @@ describe('Auth Middleware', () => {
 
   describe('user authentication', () => {
 
-    it('fails a login for a user (admin) with the incorrect basic credentials', () => {
+    it('fails a login for a user {admin} with the incorrect basic credentials', async () => {
       const basicAuthString = base64.encode('username:password');
 
       // Change the request to match this test case
@@ -42,11 +43,9 @@ describe('Auth Middleware', () => {
         authorization: `Basic ${basicAuthString}`,
       };
 
-      return middleware(req, res, next)
-        .then(() => {
-          expect(next).not.toHaveBeenCalled();
-          expect(res.status).toHaveBeenCalledWith(403);
-        });
+      await middleware(req, res, next);
+      expect(next).not.toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(403);
 
     });
 
